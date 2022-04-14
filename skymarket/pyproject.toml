@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "skymarket"
+version = "0.1.0"
+description = ""
+authors = ["arjuna <amanitocornholio@proton.me>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+drf-spectacular = "^0.26.3"
+django-cors-headers = "^4.1.0"
+djoser = "^2.2.0"
+pillow = "^9.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
