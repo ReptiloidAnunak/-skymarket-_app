@@ -22,7 +22,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone', "role"]
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone']
 
     first_name = models.CharField(
         max_length=50,
