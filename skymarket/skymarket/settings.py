@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "corsheaders",
     "rest_framework",
+    'rest_framework_simplejwt',
     "djoser",
     "users",
     "ads",
@@ -86,7 +87,11 @@ WSGI_APPLICATION = "skymarket.wsgi.application"
 # TODO здесь мы настраиваем аутентификацию и пагинацию
 REST_FRAMEWORK = {
     # OTHER REST FRAMEWORK SETTINGS
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        ["rest_framework_simplejwt.authentication.JWTAuthentication"]),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100
 }
 
 AUTH_USER_MODEL = "users.User"
