@@ -50,7 +50,7 @@ class Comment(models.Model):
                                verbose_name="Автор", help_text="Автор отзыва")
 
     ad = models.ForeignKey(Ad, on_delete=models.CASCADE,
-                           verbose_name="Объявлние")
+                           verbose_name="Объявление")
 
     created_at = models.DateTimeField(auto_now_add=True,
                                       verbose_name="Дата создания",

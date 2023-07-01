@@ -1,12 +1,11 @@
 import json
 
+from django.shortcuts import get_object_or_404
 from rest_framework import pagination, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.http import JsonResponse
-from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, CreateAPIView,\
-    UpdateAPIView, DestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from ads.models import Ad, Comment
-from ads.serializers import AdSerializer, AdDetailSerializer
+from ads.serializers import AdSerializer, AdDetailSerializer, CommentSerializer
 
 
 class AdPagination(pagination.PageNumberPagination):
@@ -30,11 +29,20 @@ class AdsView(ListCreateAPIView):
                 serializer.save(author=user)
             except Exception:
                 raise ValueError("Зарегистрируйтесь для размещения объявления")
-            ad = Ad.objects.filter(id=user.pk).first()
 
 
-class AdDetailView(RetrieveAPIView):
+class AdDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Ad.objects.all()
     serializer_class = AdDetailSerializer
-#
-# class Ad
+
+
+class CommentsViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        ad_id = self.kwargs.get("ad_pk")
+        ad_obj = get_object_or_404(Ad, id=ad_id)
+        return ad_obj.comments.all()
+
+
