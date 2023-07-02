@@ -1,13 +1,10 @@
-import json
-import requests
-from django.http import JsonResponse
-from django.views import View
-from django.shortcuts import get_object_or_404
-from rest_framework import pagination, viewsets
+
+from rest_framework import pagination
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from ads.models import Ad, Comment
 from ads.serializers import AdSerializer, AdDetailSerializer, CommentSerializer
+from ads.permissions import AdDetailPermission, CommentDetailPermission
 
 
 class AdPagination(pagination.PageNumberPagination):
@@ -36,13 +33,13 @@ class AdsView(ListCreateAPIView):
 class AdDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Ad.objects.all()
     serializer_class = AdDetailSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [AdDetailPermission]
 
 
 class CommentsView(ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         if self.kwargs.get("ad_pk"):
@@ -69,6 +66,9 @@ class CommentsView(ListCreateAPIView):
 class CommentDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [CommentDetailPermission]
+
+
+
 
 
