@@ -28,9 +28,9 @@ class Ad(models.Model):
     created_at = models.DateTimeField(auto_now_add=True,
                                       verbose_name="Дата создания")
 
-    image = models.ImageField(upload_to="images/",
+    image = models.ImageField(upload_to="ad_images/",
                               verbose_name="Фото",
-                              help_text="Разместите фото для объявления", null=True, blank=True)
+                              help_text="Разместите фото для объявления", null=True, blank=True, default=None)
 
     def __str__(self):
         return self.title

@@ -27,19 +27,19 @@ class User(AbstractBaseUser):
     first_name = models.CharField(
         max_length=50,
         verbose_name="Имя",
-        help_text="Введите имя, макс 50 символов",null=True
+        help_text="Введите имя, макс 50 символов", null=True
     )
 
     last_name = models.CharField(
         max_length=50,
         verbose_name="Фамилия",
-        help_text="Введите фамилию, макс 50 символов",null=True
+        help_text="Введите фамилию, макс 50 символов", null=True
     )
 
     email = models.EmailField(
         "email address",
         unique=True,
-        help_text="Укажите контактный имейл",null=True
+        help_text="Укажите контактный имейл", null=True
     )
 
     phone = PhoneNumberField(
@@ -57,10 +57,13 @@ class User(AbstractBaseUser):
     )
 
     is_active = models.BooleanField(
-        verbose_name="Аккаунт активен",null=True
+        verbose_name="Аккаунт активен", null=True
     )
 
-    image = models.ImageField(null=True)
+    image = models.ImageField(upload_to="user_avatars/",
+                              blank=True,
+                              null=True,
+                              default=None)
 
     @property
     def is_admin(self):

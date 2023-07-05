@@ -3,51 +3,25 @@ from django.shortcuts import get_object_or_404
 
 from users.models import UserRoles
 from ads.models import Ad, Comment
+from rest_framework.decorators import action
 
 
-class AdDetailPermission(BasePermission):
-    message = 'Updating or deleting other users ads not allowed'
+from rest_framework.permissions import BasePermission
+from users.models import UserRoles
 
+
+class IsAdmin(BasePermission):
     def has_permission(self, request, view):
-        ad = get_object_or_404(Ad, pk=view.kwargs["pk"])
+        return request.user and request.user.is_authenticated
 
-        if request.method == "GET":
-            if not bool(request.user and request.user.is_authenticated):
-                raise AttributeError("You should login to see any ad in details")
-            return True
-
-        elif request.method in ["PATCH", "PUT", "UPDATE", "DELETE"]:
-            try:
-                user_role = request.user.role
-            except AttributeError:
-                raise AttributeError("You should login to see any ad and its comments")
-            if request.user.role == UserRoles.ADMIN:
-                return True
-            elif ad.author_id == request.user.id:
-                return True
-            return False
+    def has_object_permission(self, request, view, obj):
+        return request.user.role == UserRoles.ADMIN
 
 
-class CommentDetailPermission(BasePermission):
-    message = 'Updating or deleting other users ads not allowed'
-
+class IsOwner(BasePermission):
     def has_permission(self, request, view):
-        comment = get_object_or_404(Comment, pk=view.kwargs["pk"])
+        return request.user and request.user.is_authenticated
 
-        if request.method == "GET":
-            if not bool(request.user and request.user.is_authenticated):
-                raise ValueError("You should login to see any comment")
-            return True
-
-        elif request.method in ["PATCH", "PUT", "UPDATE", "DELETE"]:
-            try:
-                user_role = request.user.role
-            except AttributeError:
-                raise AttributeError("You should login to see any ad and its comments")
-
-            if request.user.role == UserRoles.ADMIN:
-                return True
-            elif comment.author_id == request.user.id:
-                return True
-            return False
+    def has_object_permission(self, request, view, obj):
+        return request.user and request.user and obj.author == request.user
 
