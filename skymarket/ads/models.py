@@ -12,7 +12,8 @@ class Ad(models.Model):
         ordering = ("-created_at", "title")
 
     title = models.CharField(max_length=200, verbose_name="Название товара",
-                             help_text="Введите название товара")
+                             help_text="Введите название товара",
+                             )
 
     price = models.PositiveIntegerField(default=0,
                                         verbose_name="Цена товара",
@@ -20,7 +21,8 @@ class Ad(models.Model):
 
     description = models.CharField(max_length=1000,
                                    verbose_name="Описание товара",
-                                   help_text="Введите описание товара")
+                                   help_text="Введите описание товара",
+                                   )
 
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                verbose_name="Автор", null=True)
@@ -30,7 +32,7 @@ class Ad(models.Model):
 
     image = models.ImageField(upload_to="ad_images/",
                               verbose_name="Фото",
-                              help_text="Разместите фото для объявления", null=True, blank=True, default=None)
+                              help_text="Разместите фото для объявления", null=True, blank=True)
 
     def __str__(self):
         return self.title

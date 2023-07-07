@@ -39,7 +39,7 @@ class AdDetailView(RetrieveUpdateDestroyAPIView):
 
     def get_permissions(self):
         print(self.request.method)
-        self.permission_classes = (IsAdmin, )
+        self.permission_classes = (IsAuthenticated, )
         if self.request.method == "GET":
             self.permission_classes = [IsAuthenticated, ]
         elif self.request.method in ["UPDATE", "PATCH", "DELETE"]:
