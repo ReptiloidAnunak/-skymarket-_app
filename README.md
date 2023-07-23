@@ -9,11 +9,9 @@ Django, PosgreSQL, Docker
 
 ### **Насройка**
 1. В терминале запустите команду `pip install -r requirements.txt`
-2. Перейти в папку с docker-compose файлом `cd /coursework_6_skymarket/market_postgres`
+2. Перейти в папку с docker-compose файлом `cd market_postgres`
 3. Запустить команду `docker compose up --build -d`, дождаться полного запуска контейнеров
 4. Перейти в папку с файлом manage.py (coursework_6_skymarket/skymarket)
-5. В терминале выполнить команду `poetry add django`
-6. Выполнить миграции данных с помощью команды `python3 ./manage.py migrate`
 
 ### **Запуск приложения**
 1. В терминале выполнить команду `python manage.py runserver 8000`
