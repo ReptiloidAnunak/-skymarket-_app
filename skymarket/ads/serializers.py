@@ -3,7 +3,6 @@ from phonenumber_field import serializerfields
 from ads.models import Ad, Comment
 
 
-# TODO Сериалайзеры. Предлагаем Вам такую структуру, однако вы вправе использовать свою
 
 class CommentSerializer(serializers.ModelSerializer):
     author_id = serializers.ReadOnlyField(source="author.id")
